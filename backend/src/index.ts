@@ -44,13 +44,13 @@ app.use(express.urlencoded({extended:true}));
 app.use(cors({
   origin: process.env.FRONTEND_URL, // Replace with your client's origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-    optionsSuccessStatus: 204,
+    //optionsSuccessStatus: 204,
 }));
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://mern-booking-app-z2yv.onrender.com'); // Replace '*' with your frontend domain
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://mern-booking-app-z2yv.onrender.com'); // Replace '*' with your frontend domain
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
 // app.get("/api/user",userRoutes,async(req:Request,res:Response)=>{
 //         res.json({message:"hello from asit endpoints"});
