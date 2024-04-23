@@ -46,9 +46,10 @@ app.use(cors({
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
     optionsSuccessStatus: 204,
 }));
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://mern-booking-app-z2yv.onrender.com'); // Replace '*' with your frontend domain
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
 });
 
 // app.get("/api/user",userRoutes,async(req:Request,res:Response)=>{
