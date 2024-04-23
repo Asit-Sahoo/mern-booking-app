@@ -44,8 +44,12 @@ app.use(express.urlencoded({extended:true}));
 app.use(cors({
   origin: process.env.FRONTEND_URL, // Replace with your client's origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    optionsSuccessStatus: 204,
 }));
-
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
 
 // app.get("/api/user",userRoutes,async(req:Request,res:Response)=>{
 //         res.json({message:"hello from asit endpoints"});
