@@ -102,6 +102,27 @@ test("should display hotels", async ({ page }) => {
 });
 
 
+test("should edit hotel", async ({ page }) => {
+  await page.goto(`${UI_URL}my-hotels`);
+
+  await page.getByRole("link", { name: "View Details" }).first().click();
+
+  await page.waitForSelector('[name="name"]', { state: "attached" });
+  await expect(page.locator('[name="name"]')).toHaveValue("Asit Sahoo");
+  await page.locator('[name="name"]').fill("jffb UPDATED");
+  await page.getByRole("button", { name: "Save" }).click();
+  await expect(page.getByText("Hotel Saved!")).toBeVisible();
+
+  await page.reload();
+
+  await expect(page.locator('[name="name"]')).toHaveValue(
+    "jffb UPDATED"
+  );
+  await page.locator('[name="name"]').fill("Asit Sahoo");
+  await page.getByRole("button", { name: "Save" }).click();
+});
+
+
 // import { test, expect } from "@playwright/test";
 // import path from "path";
 
