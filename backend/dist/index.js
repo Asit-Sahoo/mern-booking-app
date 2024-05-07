@@ -10,7 +10,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const users_1 = __importDefault(require("./routes/users"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const path_1 = __importDefault(require("path"));
 mongoose_1.default.connect(process.env.MONGODB_CONNECTION_STRING);
 // .then(()=>
 //   console.log(
@@ -42,12 +41,9 @@ app.use((0, cors_1.default)({
 // app.get("/api/user",userRoutes,async(req:Request,res:Response)=>{
 //         res.json({message:"hello from asit endpoints"});
 // });
-app.use(express_1.default.static(path_1.default.join(__dirname, "../../frontend/dist")));
+// app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 app.use("/api/auth", auth_1.default);
 app.use("/api/users", users_1.default);
-app.get('*', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, '../../frontend/dist', 'index.html'));
-});
 app.listen(7000, () => {
     console.log("serevr is running on localhost:7000");
 });

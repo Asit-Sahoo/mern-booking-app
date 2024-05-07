@@ -7,6 +7,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verifyToken = (req, res, next) => {
     const token = req.cookies["auth_token"];
     if (!token) {
+        console.error("Token not found");
         return res.status(401).json({ message: "unauthorized" });
     }
     try {
@@ -15,6 +16,7 @@ const verifyToken = (req, res, next) => {
         next();
     }
     catch (error) {
+        console.error("Token verification failed:", error);
         return res.status(401).json({ message: "unauthorized" });
     }
 };

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
+
 declare global {
     namespace Express {
       interface Request {
@@ -11,8 +12,10 @@ declare global {
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies["auth_token"];
+    console.log("Received token:", token);
     if (!token) {
-      return res.status(401).json({ message: "unauthorized" });
+      console.error("Token not found");
+      return res.status(401).json({ message: "in valid token unauthorized" });
     }
 
 
@@ -22,6 +25,7 @@ try {
     req.userId = (decoded as JwtPayload).userId;
     next();
   } catch (error) {
+    console.error("Token verification failed:", error);
     return res.status(401).json({ message: "unauthorized" });
   }
 };

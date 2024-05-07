@@ -54,13 +54,25 @@ router.post("/login", [
         res.status(500).json({ message: "Something went wrong" });
     }
 }));
+router.post("/logout", (req, res) => {
+    const token = req.cookies["auth_token"];
+    console.log("Logout token:", token);
+    if (!token) {
+        console.error("Token not found during logout");
+        return res.status(401).json({ message: "unauthorized" });
+    }
+    res.cookie("auth_token", token, {
+        httpOnly: true,
+        expires: new Date(0),
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+    });
+    console.log("Logout successful");
+    res.status(200).send();
+    //res.send();
+});
 router.get("/validate-token", auth_1.default, (req, res) => {
     res.status(200).send({ userId: req.userId });
-});
-router.post("/logout", (req, res) => {
-    res.cookie("auth_token", "", {
-        expires: new Date(0),
-    });
-    res.send();
 });
 exports.default = router;

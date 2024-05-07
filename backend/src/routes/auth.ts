@@ -55,16 +55,29 @@ router.post(
       }
     }
   );
-  router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
-    res.status(200).send({ userId: req.userId });
-  });
+ 
 
   
     router.post("/logout", (req: Request, res: Response) => {
-    res.cookie("auth_token", "", {
-      expires: new Date(0),
+      const token = req.cookies["auth_token"];
+      console.log("Logout token:", token);
+    
+      if (!token) {
+        console.error("Token not found during logout");
+        return res.status(401).json({ message: "unauthorized" });
+      }
+    res.cookie("auth_token", token, {
+      httpOnly: true,
+    expires: new Date(0),
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    path: "/",
     });
-    res.send();
+    console.log("Logout successful");
+    res.status(200).send();
+    //res.send();
   });
-
+  router.get("/validate-token", verifyToken, (req: Request, res: Response) => {
+    res.status(200).send({ userId: req.userId });
+  });
   export default router;
