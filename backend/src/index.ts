@@ -58,8 +58,13 @@ app.use("/api/auth/validate-token", (req, res, next) => {
 app.use(cors({
   origin: process.env.FRONTEND_URL, // Replace with your client's origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    //optionsSuccessStatus: 204,
 }));
-
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://mern-booking-app-z2yv.onrender.com'); // Replace '*' with your frontend domain
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
 // app.get("/api/user",userRoutes,async(req:Request,res:Response)=>{
 //         res.json({message:"hello from asit endpoints"});
@@ -73,7 +78,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/my-hotels", myHotelRoutes);
 
 app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+  res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
 });
 
 

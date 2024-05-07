@@ -84,6 +84,23 @@ test("should allow user to add a hotel", async ({ page }) => {
     }
 });
 
+test("should display hotels", async ({ page }) => {
+  await page.goto(`${UI_URL}my-hotels`);
+
+  await expect(page.getByText("Asit Sahoo")).toBeVisible();
+  await expect(page.getByText("jffb")).toBeVisible();
+  await expect(page.getByText("KOLAGHAT, India")).toBeVisible();
+  await page.getByText('Budget').first().click();
+  await expect(page.getByText("£1321 per night")).toBeVisible();
+  await expect(page.getByText("3 adults, 0 children")).toBeVisible();
+  await expect(page.getByText("2 Star Rating")).toBeVisible();
+
+  await expect(
+    page.getByRole("link", { name: "View Details" }).first()
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Add Hotel" })).toBeVisible();
+});
+
 
 // import { test, expect } from "@playwright/test";
 // import path from "path";
