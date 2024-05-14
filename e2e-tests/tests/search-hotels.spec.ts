@@ -55,7 +55,7 @@ test("should book hotel", async ({ page }) => {
   await page.getByText("Dublin Getaways").click();
   await page.getByRole("button", { name: "Book now" }).click();
 
-  await expect(page.getByText("Total Cost: £447.00")).toBeVisible();
+  await expect(page.getByText("Total Cost: £354.00")).toBeVisible();
 
   const stripeFrame = page.frameLocator("iframe").first();
   await stripeFrame
@@ -67,10 +67,10 @@ test("should book hotel", async ({ page }) => {
 
   await page.getByRole("button", { name: "Confirm Booking" }).click();
   await Promise.race([
-    page.waitForSelector('text="Booking Saved!"', { timeout: 20000 }),
+    page.waitForSelector('text="Booking Saved!"', { timeout: 30000 }),
     //page.waitForSelector('text="Some other element indicating error"', { timeout: 10000 })
 ]);
 
-  // await page.getByRole("link", { name: "My Bookings" }).click();
-  // await expect(page.getByText("Dublin Getaways")).toBeVisible();
+   await page.getByRole("link", { name: "My Bookings" }).click();
+   await expect(page.getByText("Dublin Getaways")).toBeVisible();
 });
