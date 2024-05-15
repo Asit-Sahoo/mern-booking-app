@@ -15,22 +15,22 @@ import Search from "./pages/Search";
 import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
 import MyBookings from "./pages/MyBookings";
+import Home from "./pages/Home";
 
 const App=()=>{
   const { isLoggedIn } = useAppContext();
   return(
     <Router>
       <Routes>
-        <Route 
-        path="/" 
-        element={
-         
-        <Layouts>
-          <p>Home page</p>
-        </Layouts>
-       
-        }
+      <Route
+          path="/"
+          element={
+            <Layouts>
+              <Home />
+            </Layouts>
+          }
         />
+
         
         
        <Route path="/register" element={<Layouts><Register /></Layouts>}/>
