@@ -1,3 +1,5 @@
+import { useState, useEffect,CSSProperties } from 'react';
+import  BarLoader from "react-spinners/ClipLoader";
 import {
   BrowserRouter as Router,
   Route,
@@ -16,10 +18,43 @@ import Detail from "./pages/Detail";
 import Booking from "./pages/Booking";
 import MyBookings from "./pages/MyBookings";
 import Home from "./pages/Home";
+//import Loader from './components/Loader';
+const override: CSSProperties = {
+  display: "block",
+  position: "fixed",
+
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  zIndex: 9999,
+  
+ 
+};
 
 const App=()=>{
   const { isLoggedIn } = useAppContext();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const handleStart = () => setLoading(true);
+    const handleComplete = () => {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000); // Simulate a 1-second delay
+    };
+
+    handleStart();
+    handleComplete();
+  }, []);
   return(
+    <>
+    {loading && <BarLoader
+  
+  //loading={true}
+  // size={50}
+  cssOverride={override}
+  color="#25a1d3"
+/>}
     <Router>
       <Routes>
       <Route
@@ -108,7 +143,7 @@ const App=()=>{
        <Route path="*" element={<Navigate to="/"/>}/>
       </Routes>
     </Router>
-   
+    </>
     
   );
 };
